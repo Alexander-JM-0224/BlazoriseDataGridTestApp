@@ -1,0 +1,274 @@
+﻿@page "/header"
+
+<h3>DataGridHeader</h3>
+
+<DataGrid @ref="_dataGrid"
+          TItem="GridVan"
+          Data="@_custVans"
+          Filterable="true"
+          ShowPager="true"
+          PageSize="25"
+          Virtualize=true
+          FixedColumns=true
+          VirtualizeOptions="@(new() { DataGridHeight = "calc(100vh - 90px)", DataGridMaxHeight="2000px"})"
+          ShowHeaderGroupCaptions>
+    <DataGridColumns>
+        @*==== Edit knop ====*@
+        <DataGridColumn Field="@nameof(GridVan.Id)"
+                        Caption="Wijzig"
+                        Filterable=false
+                        Sortable=false
+                        FixedPosition="TableColumnFixedPosition.Start"
+                        Width="45px"
+                        HeaderGroupCaption="Personal Info">
+            <DisplayTemplate>
+                <Button Color="Color.Secondary" Type="ButtonType.Link"><Icon Name="IconName.Edit" /> </Button>
+            </DisplayTemplate>
+        </DataGridColumn>
+
+        @*==== Foto's ====*@
+        <DataGridColumn Field="@nameof(GridVan.PictureCount)"
+                        Caption="Foto's"
+                        Sortable=false
+                        Filterable=false
+                        FixedPosition="TableColumnFixedPosition.End"
+                        Width="40px"
+                        HeaderGroupCaption="Personal Info">
+            <DisplayTemplate>
+            </DisplayTemplate>
+        </DataGridColumn>
+
+        @*==== Klant naam ====*@
+        <DataGridColumn Field="@nameof(GridVan.CustomerName)"
+                        Caption="Klant"
+                        FixedPosition="TableColumnFixedPosition.Start"
+                        Width="120px"
+                        HeaderGroupCaption="Personal Info">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== WagenNaam ====*@
+        <DataGridColumn Field="@nameof(GridVan.Name)"
+                        Caption="Naam"
+                        Width="60px"
+                        FixedPosition="TableColumnFixedPosition.Start"
+                        HeaderGroupCaption="Personal Info">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== Aantal cervice-acties ====*@
+        <DataGridDateColumn Field="@nameof(GridVan.ActionsCount)"
+                            Caption="Service"
+                            Filterable="false"
+                            Width="50px"
+                            HeaderGroupCaption="Personal Info">
+            <DisplayTemplate>
+            </DisplayTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridDateColumn>
+
+        @*==== Model ====*@
+        <DataGridColumn Field="@nameof(GridVan.Model)"
+                        Caption="Model"
+                        Displayable=true
+                        Width="50px"
+                        HeaderGroupCaption="Vrachtwagen">
+            <DisplayTemplate>
+                @context.Model
+            </DisplayTemplate>
+        </DataGridColumn>
+        @*==== Kant ====*@
+        <DataGridColumn Field="@nameof(GridVan.LoaderSide)"
+                        Caption="Kant"
+                        Width="80px"
+                        HeaderGroupCaption="Vrachtwagen">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+            <DisplayTemplate>
+                @context.LoaderSide
+            </DisplayTemplate>
+        </DataGridColumn>
+        @*==== Kenteken ====*@
+        <DataGridColumn Field="@nameof(GridVan.Kenteken)"
+                        Caption="Kenteken"
+                        Width="70px"
+                        HeaderGroupCaption="Vrachtwagen">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+
+        @*==== Merk wagen ====*@
+        <DataGridColumn Field="VanBrand.Name"
+                        Caption="Merk"
+                        Width="90px"
+                        HeaderGroupCaption="Vrachtwagen">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== Wagen model ====*@
+        <DataGridColumn Field="VanBrandModel.Name"
+                        Caption="Type"
+                        Width="120px"
+                        HeaderGroupCaption="Belader">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== Belader merk ====*@
+        <DataGridColumn Field="LoaderBrand.Name"
+                        Caption="Belading"
+                        Width="100px"
+                        HeaderGroupCaption="Belader">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== Belader model ====*@
+        <DataGridColumn Field="LoaderModel.Name"
+                        Caption="Belader Model"
+                        Width="120px"
+                        HeaderGroupCaption="Belader">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== Opbouw ====*@
+        <DataGridColumn Field="ContainerBrand.Name"
+                        Caption="Opbouw"
+                        Width="90px"
+                        HeaderGroupCaption="Belader">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+        @*==== Opbouw naam ====*@
+        <DataGridColumn Field="ContainerModel.Name"
+                        Caption="Container Model"
+                        Width="110px"
+                        HeaderGroupCaption="Belader">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+
+
+        @*==== Opgebouwd ====*@
+        <DataGridDateColumn Field="@nameof(GridVan.DateProduction)"
+                            Caption="Opgebouwd"
+                            DisplayFormat="{0:dd-MM-yyyy}"
+                            Filterable=false
+                            Width="90px"
+                            HeaderGroupCaption="Service">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridDateColumn>
+
+        @*==== Camera capure ====*@
+        <DataGridCheckColumn Field="@nameof(GridVan.CameraCapture)"
+                             Filterable=false
+                             Width="50px" HeaderGroupCaption="Service">
+            <CaptionTemplate>
+                Waste<br />Guard
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+            <DisplayTemplate>
+                <TrueFalseTemplate BoolValue="@context.CameraCapture" />
+            </DisplayTemplate>
+        </DataGridCheckColumn>
+
+        @*==== Live sync ====*@
+        <DataGridCheckColumn Field="@nameof(GridVan.LiveSync)"
+                             Filterable=false
+                             Width="50px" HeaderGroupCaption="Service">
+            <CaptionTemplate>
+                Live<br /> sync
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+            <DisplayTemplate>
+                <TrueFalseTemplate BoolValue="@context.LiveSync" />
+            </DisplayTemplate>
+        </DataGridCheckColumn>
+
+        @*==== Gemeente keuze ====*@
+        <DataGridCheckColumn Field="@nameof(GridVan.MunicipalitySelect)"
+                             Filterable=false
+                             Width="70px" HeaderGroupCaption="Service">
+            <CaptionTemplate>
+                Gemeente<br /> keuze
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+            <DisplayTemplate>
+                <TrueFalseTemplate BoolValue="@context.MunicipalitySelect" />
+            </DisplayTemplate>
+        </DataGridCheckColumn>
+
+        @*==== End of life ====*@
+        <DataGridDateColumn Field="@nameof(GridVan.EndOfLife)"
+                            Caption="Eol"
+                            DisplayFormat="{0:dd-MM-yyyy}"
+                            Filterable=false
+                            Width="90px" HeaderGroupCaption="Service">
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridDateColumn>
+
+    </DataGridColumns>
+</DataGrid>
+
+@code {
+    private DataGrid<GridVan> _dataGrid;
+    private List<GridVan> _custVans;
+
+    public class GridVan
+    {
+        public int Id { get; set; }
+        public int PictureCount { get; set; }
+        public string CustomerName { get; set; }
+        public string Name { get; set; }
+        public int ActionsCount { get; set; }
+        public string ActionsCountText { get; set; }
+        public List<ServiceAction> ServiceActions { get; set; } = new();
+
+        public string Model { get; set; }
+        public string LoaderSide { get; set; }
+        public string Kenteken { get; set; }
+
+
+        public string VanBrand { get; set; }
+        public string VanBrandModel { get; set; }
+        public string LoaderBrand { get; set; }
+        public string LoaderModel { get; set; }
+        public string ContainerBrand { get; set; }
+        public string ContainerModel { get; set; }
+
+        public DateTime? DateProduction { get; set; }
+        public bool CameraCapture { get; set; }
+        public bool LiveSync { get; set; }
+        public bool MunicipalitySelect { get; set; }
+        public DateTime? EndOfLife { get; set; }
+    }
+
+    public class ServiceAction
+    {
+        public int? Id { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public string Assignment { get; set; }
+        public bool IsSolved { get; set; }
+    }
+}
+
