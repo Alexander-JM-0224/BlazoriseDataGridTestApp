@@ -1,0 +1,137 @@
+﻿@page "/detailrowpagedisplayable"
+
+<h3>DetailRowPage - Displayable</h3>
+
+<p>On this page we use the Displayable="false" attribute on the "Status" column, as you can see when openening the detailrow the Grid collapses...</p>
+
+<DataGrid @ref="gridRef"
+          TItem="ExampleVMDisplayable"
+          Data="ExampleVMs"
+          PageSize="200"
+          Filterable=true
+          FilterMethod="DataGridFilterMethod.Contains"
+          Responsive
+          SortMode="DataGridSortMode.Single"
+          FixedColumns
+          DetailRowTrigger="@((context) => OnDetailRowTrigger(context, ExpandedSubrowsForVanId))"
+          Class="table-max-width">
+    <DataGridColumns>
+        <DataGridSelectColumn Field="@nameof(ExampleVMDisplayable.Id)"
+                              Filterable=false
+                              Sortable=false
+                              Width="33px"
+                              FixedPosition="TableColumnFixedPosition.Start">
+            <DisplayTemplate>
+                @if (context.VanStatusDetails.Count() > 0)
+                {
+                    @if (context.Id == ExpandedSubrowsForVanId)
+                    {
+                        <Button @onclick="@(()=> ExpandedSubrowsForVanId = 0)">
+                            <i class="fas fa-caret-down" />
+                        </Button>
+                    }
+                    else
+                    {
+                        <Button @onclick="@((e) => OnOpenDetailRowClick(context.Id, ref ExpandedSubrowsForVanId))">
+                            <i class="fas fa-caret-right" />
+                        </Button>
+                    }
+                }
+            </DisplayTemplate>
+        </DataGridSelectColumn>
+
+        <DataGridColumn Field="@nameof(ExampleVMDisplayable.Name)"
+                        TextAlignment="TextAlignment.Center"
+                        HeaderTextAlignment="TextAlignment.Center"
+                        Sortable=true
+                        SortField="@nameof(ExampleVMDisplayable.Id)"
+                        Width="150px"
+                        FixedPosition="TableColumnFixedPosition.Start">
+            <CaptionTemplate>
+                <Tooltip Placement="TooltipPlacement.Bottom" Text="Name">Name</Tooltip>
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+
+        <DataGridColumn Field="@nameof(ExampleVMDisplayable.Description)"
+                        TextAlignment="TextAlignment.Center"
+                        HeaderTextAlignment="TextAlignment.Center"
+                        Sortable=true
+                        SortField="@nameof(ExampleVMDisplayable.Description)"
+                        Width="150px"
+                        FixedPosition="TableColumnFixedPosition.Start">
+            <CaptionTemplate>
+                <Tooltip Placement="TooltipPlacement.Bottom" Text="Description">Description</Tooltip>
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+
+        <DataGridColumn Field="@nameof(ExampleVMDisplayable.Subject)"
+                        TextAlignment="TextAlignment.Center"
+                        HeaderTextAlignment="TextAlignment.Center"
+                        Sortable=true
+                        SortField="@nameof(ExampleVMDisplayable.Subject)"
+                        Width="150px"
+                        FixedPosition="TableColumnFixedPosition.Start">
+            <CaptionTemplate>
+                <Tooltip Placement="TooltipPlacement.Bottom" Text="Subject">Subject</Tooltip>
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+
+        <DataGridColumn Field="@nameof(ExampleVMDisplayable.Status)"
+                        TextAlignment="TextAlignment.Center"
+                        HeaderTextAlignment="TextAlignment.Center"
+                        Sortable=true
+                        SortField="@nameof(ExampleVMDisplayable.Status)"
+                        Width="150px"
+                        FixedPosition="TableColumnFixedPosition.Start"
+                        Displayable="false">
+            <CaptionTemplate>
+                <Tooltip Placement="TooltipPlacement.Bottom" Text="Status">Status</Tooltip>
+            </CaptionTemplate>
+            <SortDirectionTemplate>
+                <SortTemplate Direction="@context" />
+            </SortDirectionTemplate>
+        </DataGridColumn>
+
+    </DataGridColumns>
+    <DetailRowTemplate>
+        @{
+            var details = context.VanStatusDetails;
+            <DataGrid TItem="DetailsVMDisplayable"
+                      Data="details"
+                      Sortable=false
+                      ShowCaptions=false
+                      Context="detailContext">
+                <DataGridNumericColumn Field="@nameof(DetailsVMDisplayable.Id)">
+                    <DisplayTemplate Context="detailContext">
+                        Links:  @(detailContext.Id)
+                    </DisplayTemplate>
+                </DataGridNumericColumn>
+                <DataGridNumericColumn Field="@nameof(DetailsVMDisplayable.Name)">
+                    <DisplayTemplate Context="detailContext">
+                        Rechts:  @(detailContext.Name)
+                    </DisplayTemplate>
+                </DataGridNumericColumn>
+
+                <DataGridNumericColumn Field="@nameof(DetailsVMDisplayable.Description)">
+                    <DisplayTemplate Context="detailContext">
+                        4 wiel:  @(detailContext.Description)
+                    </DisplayTemplate>
+                </DataGridNumericColumn>
+            </DataGrid>
+        }
+    </DetailRowTemplate>
+</DataGrid>
+
+
+@code {
+
+}
